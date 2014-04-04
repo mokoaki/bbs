@@ -1,0 +1,61 @@
+
+body {
+  background-image: url("/assets/ba.png");
+  margin: 0px;
+}
+
+div.header {
+  background-color: #ffffff;
+  color: #ffffff;
+  width: 100%;
+  padding: 5px;
+}
+
+div.green_content {
+  background-color: #ccffcc;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 1px;
+  margin: 20px;
+  padding: 7px;
+}
+
+div.gray_content {
+  background-color: #efefef;
+  border-style: solid;
+  border-color: #000000;
+  border-width: 1px;
+  margin: 20px;
+  padding: 7px;
+}
+
+div.inner_content {
+  border-style: solid;
+  border-color: #000000;
+  border-width: 1px;
+  padding: 7px;
+}
+
+div.context1 {
+  margin-top: 15px;
+}
+
+div.context2 {
+  margin: 3px;
+  margin-left: 30px;
+}
+
+div.write {
+  margin-top: 15px;
+}
+
+span.title {
+  color: #ff0000;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+span.user_name {
+  color: green;
+  font-weight: bold;
+}

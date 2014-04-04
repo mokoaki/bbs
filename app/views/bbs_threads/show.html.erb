@@ -1,0 +1,9 @@
+<%= render 'shared/plate' %>
+
+<div class="green_content">
+  <div class="inner_content">
+    <%= @plate.name %>
+  </div>
+</div>
+
+<%= render 'shared/thread', bbs_thread: @bbs_thread, contexts: @bbs_thread.contexts.includes(:user) %>

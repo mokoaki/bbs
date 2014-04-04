@@ -1,0 +1,15 @@
+<%= render 'shared/plate' %>
+
+<div class="green_content">
+  <div class="inner_content">
+    <%= @plate.name %> のスレ一覧<br />
+
+    <% @bbs_threads.each do |bbs_thread| %>
+      <%= link_to bbs_thread.name, bbs_thread %>
+    <% end %>
+  </div>
+</div>
+
+<% @bbs_threads[0..9].each do |bbs_thread| %>
+  <%= render 'shared/thread', bbs_thread: bbs_thread, contexts: bbs_thread.contexts.includes(:user).last(10) %>
+<% end %>
