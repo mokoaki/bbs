@@ -1,13 +1,21 @@
 <%= render 'error_messages', object: f.object %>
 
-<%= f.label :name %>
-<%= f.text_field :name %>
+<div>
+  <%= f.label :name, '名前' %>
+  <%= f.text_field :name %>
+</div>
 
-<%= f.label :email %>
-<%= f.text_field :email %>
+<div>
+  <%= f.label :email, 'メールアドレス' %>
+  <%= f.text_field :email %>
+</div>
 
-<%= f.label :password %>
-<%= f.password_field :password %>
+<div>
+  <%= f.label :password, 'パスワード' %>
+  <%= f.password_field :password %>
+</div>
 
-<%= f.label :password_confirmation, "Confirm Password" %>
-<%= f.password_field :password_confirmation %>
+<div>
+  <%= f.label :password_confirmation, 'もう一度パスワード' %>
+  <%= f.password_field :password_confirmation %>
+</div>

@@ -5,11 +5,11 @@
     <%= @plate.name %> のスレ一覧<br />
 
     <% @bbs_threads.each do |bbs_thread| %>
-      <%= link_to bbs_thread.name, bbs_thread %>
+      <%= link_to "#{bbs_thread.name} (#{bbs_thread.contexts.size})", bbs_thread %>
     <% end %>
   </div>
 </div>
 
 <% @bbs_threads[0..9].each do |bbs_thread| %>
-  <%= render 'shared/thread', bbs_thread: bbs_thread, contexts: bbs_thread.contexts.includes(:user).last(10) %>
+  <%= render 'shared/thread', bbs_thread: bbs_thread, contexts: bbs_thread.contexts.last(10) %>
 <% end %>

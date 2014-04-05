@@ -1,13 +1,12 @@
 Bbs::Application.routes.draw do
   root 'users#index'
 
-  resources :sessions, only: [:new, :create, :destroy]
-  resources :users
-  resources :plates, only: [:show]
+  resources :sessions, only: [:create]
+  resources :users, only: [:edit, :update]
+  resources :plates, only: [:show, :create]
   resources :bbs_threads, only: [:show]
   resources :contexts, only: [:show, :create]
 
-  match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
 end

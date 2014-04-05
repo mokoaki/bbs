@@ -1,12 +1,23 @@
-sessions#new
-<%= form_tag(sessions_path) do %>
-  <%= label_tag :email %>
-  <%= text_field_tag :email %>
+<div class="green_content">
+  <div class="inner_content">
+    <div>
+      ログイン
+    </div>
 
-  <%= label_tag :password %>
-  <%= password_field_tag :password %>
+    <div>
+      <%= form_tag(sessions_path) do %>
+        <div>
+          <%= label_tag :email, 'メールアドレス' %>
+          <%= text_field_tag :email %>
+        </div>
 
-  <%= submit_tag "Sign in", class: "btn btn-large btn-primary" %>
-<% end %>
+        <div>
+          <%= label_tag :password, 'パスワード' %>
+          <%= password_field_tag :password %>
+        </div>
 
-<%= link_to '新規ユーザ', signup_path %>
+        <%= submit_tag 'ログイン' %>
+      <% end %>
+    </div>
+  </div>
+</div>

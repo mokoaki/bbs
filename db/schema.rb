@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140402094505) do
     t.string   "remember_token"
     t.boolean  "super_admin",     default: false
     t.boolean  "admin",           default: false
+    t.boolean  "enable",          default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

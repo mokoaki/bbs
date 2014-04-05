@@ -5,7 +5,7 @@ class BbsThreadsController < ApplicationController
     @bbs_thread = BbsThread.find_by(id: params[:id])
 
     if @bbs_thread.nil?
-      redirect_to users_path
+      redirect_to root_path
       return
     end
 

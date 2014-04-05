@@ -1,11 +1,11 @@
 class SessionsController < ApplicationController
-  before_action :no_login_user_goto_root, except: [:new, :create, :destroy]
-
+   #ログイン
   def new
   end
 
+  #ログインtry
   def create
-    user = User.find_by(email: params[:email].downcase)
+    user = User.find_by(enable: true, email: params[:email].downcase)
 
     if user && user.authenticate(params[:password])
       sign_in user
@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  #ログアウト
   def destroy
     sign_out
     redirect_to root_url

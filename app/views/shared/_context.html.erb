@@ -1,8 +1,8 @@
-<div class="context1">
+<div  class="context1">
   <% youbi = youbi(context.created_at.wday) %>
   <%= context.no %> ：名前：<span class="user_name"><%= context.user.name %></span> ：<%= context.created_at.strftime("%Y/%m/%d/(#{youbi}) %T") %><br />
 
   <div class="context2">
-    <%= wrap context.description %>
+    <%= raw wrap context.description %>
   </div>
 </div>

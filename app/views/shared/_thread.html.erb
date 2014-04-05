@@ -1,20 +1,20 @@
 <div class="gray_content">
   <div class="inner_content">
-    <span class="title"><%= bbs_thread.name %></span><br />
+    <div class="bbs_thread_<%= bbs_thread.id %>">
+      <span class="title"><%= bbs_thread.name %></span><br />
 
-    <% contexts.each do |context| %>
-      <%= render 'shared/context', context: context %>
-      <% @context_max_no = context.no %>
-    <% end %>
+      <%= render partial: 'shared/context', collection: contexts %>
 
-    <div class="write">
-      <%= @context_max_no %>
+      <span class="insert_new_contexts"></span>
 
-      <%= form_for bbs_thread.contexts.build do |f| %>
-        <%= f.hidden_field :bbs_thread_id %>
-        <%= f.submit '書き込む' %><br />
-        <%= f.text_area :description, rows: 5, cols: 64 %>
-      <% end %>
+      <div class="kakikomi">
+        <%= form_for bbs_thread.contexts.build(no: contexts.last.no + 1), remote: true do |f| %>
+          <%= f.hidden_field :bbs_thread_id %>
+          <%= f.hidden_field :no %>
+          <%= f.submit '書き込む', :data => {:disable_with => '書き込む'} %><br />
+          <%= f.text_area :description, rows: 5, cols: 64 %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
