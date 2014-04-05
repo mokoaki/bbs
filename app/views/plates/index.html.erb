@@ -1,0 +1,19 @@
+<div class="green_content">
+  <div class="inner_content">
+    <%= form_for @plate do |f| %>
+      <%= f.text_field :name %>
+      <%= f.submit '新規作成' %>
+    <% end %>
+
+    板一覧
+
+    <table>
+      <% @plates.each do |plate| %>
+        <tr>
+          <td><%= plate.name %></td>
+          <td><%= link_to '削除', :method => :delete, :confirm => 'Are you sure?' %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

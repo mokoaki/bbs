@@ -1,7 +1,7 @@
 <% if signed_in?%>
   <div class="header">
     <% if current_user.admin? || current_user.super_admin? %>
-      <%= link_to '板管理' %>
+      <%= link_to '板管理', plates_path %>
       <%= link_to 'ユーザ管理' %>
     <% end %>
 

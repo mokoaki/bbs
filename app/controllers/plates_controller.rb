@@ -12,10 +12,19 @@ class PlatesController < ApplicationController
     @bbs_threads = @plate.bbs_threads
   end
 
-  def create
-    #super_admin?
+  def index
+    if current_user.super_admin?
+      @plates = Plate.where(nil)
+    else
+      @plates = curren_user.plates
+    end
 
+    @plate = Plate.new
+  end
+
+  def create
     @plate = Plate.create(plate_params)
+    redirect_to plates_path
   end
 
 
