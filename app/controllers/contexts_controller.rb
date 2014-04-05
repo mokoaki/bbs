@@ -15,6 +15,7 @@ class ContextsController < ApplicationController
   def create
     context         = Context.new(context_params)
     context.user_id = current_user.id
+    context.no      = Context.where(bbs_thread_id: params[:context][:bbs_thread_id]).size + 1
 
     if context.valid?
       while context.id.nil?
@@ -25,6 +26,15 @@ class ContextsController < ApplicationController
 
     @bbs_thread_id = context.bbs_thread_id
     @contexts      = Context.where(bbs_thread_id: @bbs_thread_id).where("no >= ?", context_params['no'])
+  end
+
+  def recontexts
+    @contexts = Context.where("bbs_thread_id = #{params[:bbs_thread_id]}").where("no > #{params[:no]}").where("description like ?", "%>>#{params[:no]} %")
+
+    @contexts.each do |context|
+      logger.info(params[:margin])
+      logger.info(context.inspect)
+    end
   end
 
   private

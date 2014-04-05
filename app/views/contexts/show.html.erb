@@ -1,4 +1,10 @@
+<%= render 'shared/plates' %>
 <%= render 'shared/plate' %>
-<%= render 'shared/bbs_thread' %>
 
-<%= render 'shared/context', context: @context %>
+<%= render 'shared/thread', bbs_thread: @bbs_thread, contexts: [@context] %>
+
+<script type="text/javascript">
+  $(function(){
+    re_contexts_update(<%= @bbs_thread.id %>, <%= @context.id %>, 30);
+  });
+</script>

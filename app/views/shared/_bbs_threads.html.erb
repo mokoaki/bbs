@@ -1,0 +1,9 @@
+<div class="green_content">
+  <div class="inner_content">
+    スレッド一覧<br />
+
+    <% bbs_threads.each do |bbs_thread| %>
+      <%= link_to "#{bbs_thread.name} (#{bbs_thread.contexts.size})", bbs_thread %>
+    <% end %>
+  </div>
+</div>

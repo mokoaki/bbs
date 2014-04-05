@@ -1,0 +1,5 @@
+<% @contexts.each do |context| %>
+  $("#context_<%= params[:id] %>").after("<%= escape_javascript(render(partial: 'shared/context', locals: {context: context})) %>")
+  $("#context_<%= params[:id] %> + #context_<%= context[:id] %>").css({"margin-left" : "<%= params[:margin] %>px"})
+  re_contexts_update(<%= params[:bbs_thread_id] %>, <%= context.id %>, <%= params[:margin].to_i + 30 %>);
+<% end %>

@@ -17,6 +17,8 @@ div.green_content {
   border-color: #000000;
   border-width: 1px;
   margin: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 7px;
 }
 
@@ -36,11 +38,11 @@ div.inner_content {
   padding: 7px;
 }
 
-div.context1 {
+div.context_body {
   margin-top: 20px;
 }
 
-div.context2 {
+div.context_description {
   margin: 3px;
   margin-left: 30px;
 }
@@ -58,4 +60,8 @@ span.title {
 span.user_name {
   color: green;
   font-weight: bold;
+}
+
+div.kakikomi {
+  margin-top: 20px;
 }

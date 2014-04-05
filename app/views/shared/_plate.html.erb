@@ -1,8 +1,5 @@
 <div class="green_content">
   <div class="inner_content">
-    板一覧<br />
-    <% current_user.plates.each do |plate| %>
-      <%= link_to plate.name, plate %>
-    <% end %>
+    <%= @plate.name %>
   </div>
 </div>
