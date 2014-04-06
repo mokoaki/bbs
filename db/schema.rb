@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20140402094505) do
     t.datetime "updated_at"
   end
 
+  add_index "bbs_threads", ["plate_id"], name: "index_bbs_threads_on_plate_id", using: :btree
+
   create_table "contexts", force: true do |t|
     t.integer  "user_id"
     t.integer  "bbs_thread_id"

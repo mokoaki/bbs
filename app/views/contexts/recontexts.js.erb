@@ -1,5 +1,10 @@
 <% @contexts.each do |context| %>
   $("#context_<%= params[:id] %>").after("<%= escape_javascript(render(partial: 'shared/context', locals: {context: context})) %>")
   $("#context_<%= params[:id] %> + #context_<%= context[:id] %>").css({"margin-left" : "<%= params[:margin] %>px"})
+
+  //線は要らないかね？
+  //$("#context_<%= params[:id] %> + #context_<%= context[:id] %>").css({"padding" : "5px", "border" : "1px solid #cccccc"})
+  //$("#context_<%= params[:id] %>").css({"padding" : "5px", "border" : "1px solid #cccccc"})
+
   re_contexts_update(<%= params[:bbs_thread_id] %>, <%= context.id %>, <%= params[:margin].to_i + 30 %>);
 <% end %>

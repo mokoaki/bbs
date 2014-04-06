@@ -2,7 +2,7 @@
   <div class="inner_content">
     板一覧<br />
 
-    <% if admin? %>
+    <% if super_admin? %>
 
       <%= form_tag plates_update_path, method: :patch do %>
         <% get_plates.each do |plate| %>

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method [:current_user, :signed_in?, :admin?, :super_admin?]
-  helper_method [:get_plates, :get_plate_by_id, :get_bbs_thread_by_id, :get_bbs_threads_by_plate_id]
+  helper_method [:get_plates, :get_bbs_threads_by_plate_id]
 
   private
 

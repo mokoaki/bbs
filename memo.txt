@@ -2,4 +2,18 @@ bundle exec spring rake db:drop
 bundle exec spring rake db:create
 bundle exec spring rake db:migrate
 bundle exec spring rake db:populate
+
+テストユーザ
+test@gmail.com
+11111111
+
+adminユーザ
+admin@gmail.com
+11111111
+
+superadminユーザ
+sadmin@gmail.com
+11111111
+
 bundle exec spring rake db:test:prepare
+bundle exec spring rspec

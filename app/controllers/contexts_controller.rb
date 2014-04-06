@@ -18,6 +18,7 @@ class ContextsController < ApplicationController
     context.no      = Context.where(bbs_thread_id: params[:context][:bbs_thread_id]).size + 1
 
     if context.valid?
+      #noŽæ‚ç‚ê‚Ä‚½‚ç‚P‘«‚µ‚ÄÄƒgƒ‰ƒC
       while context.id.nil?
         context.save rescue
         context.no += 1

@@ -1,6 +1,11 @@
-修正
-<%= form_for(@user) do |f| %>
-  <%= render 'form', f: f %>
+<%= render 'shared/plates' %>
 
-  <%= f.submit "保存" %>
-<% end %>
+<div class="green_content">
+  <div class="inner_content">
+    <%= form_for(@user) do |f| %>
+      <%= render 'form', f: f %>
+
+      <%= f.submit "保存" %>
+    <% end %>
+  </div>
+</div>

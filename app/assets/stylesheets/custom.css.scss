@@ -1,7 +1,9 @@
+@import "bootstrap";
 
 body {
   background-image: url("/assets/ba.png");
   margin: 0px;
+  overflow-x: hidden;
 }
 
 div.header {

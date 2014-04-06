@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = current_user
 
     if @user.update_attributes(user_params)
-      flash.now[:success] = "更新した"
+      flash.now[:success] = "更新おｋ"
     end
 
     render 'edit'
