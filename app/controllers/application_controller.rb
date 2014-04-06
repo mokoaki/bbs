@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by(remember_token: User.encrypt(cookies[:remember_token]))
+    @current_user ||= User.find_by(remember_token: User.encrypt(cookies[:remember_token]), enable: true)
   end
 
   def super_admin?

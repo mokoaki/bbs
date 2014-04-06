@@ -1,7 +1,7 @@
 <%= render 'shared/plates' %>
 <%= render 'shared/plate' %>
-<%= render 'shared/bbs_threads', bbs_threads: @bbs_threads %>
+<%= render 'shared/bbs_threads' %>
 
-<% @bbs_threads[0..9].each do |bbs_thread| %>
+<% get_bbs_threads_by_plate_id(@plate.id)[0..9].each do |bbs_thread| %>
   <%= render 'shared/thread', bbs_thread: bbs_thread, contexts: bbs_thread.contexts.last(10) %>
 <% end %>

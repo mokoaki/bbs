@@ -6,5 +6,7 @@ class CreateBbsThreads < ActiveRecord::Migration
 
       t.datetime :updated_at
     end
+
+    add_index :bbs_threads, :plate_id
   end
 end

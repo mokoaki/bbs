@@ -11,7 +11,6 @@ class BbsThreadsController < ApplicationController
     end
 
     @plate       = @bbs_thread.plate
-    @bbs_threads = @plate.bbs_threads
   end
 
   def create

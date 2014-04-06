@@ -29,11 +29,16 @@ class ContextsController < ApplicationController
   end
 
   def recontexts
-    @contexts = Context.where("bbs_thread_id = #{params[:bbs_thread_id]}").where("no > #{params[:no]}").where("description like ?", "%>>#{params[:no]} %")
+    search = ">>#{params[:no]}"
 
-    @contexts.each do |context|
-      logger.info(params[:margin])
-      logger.info(context.inspect)
+    temp_contexts = Context.where("bbs_thread_id = #{params[:bbs_thread_id]}").where("#{params[:no]} < no").where("description like ?", "%#{search}%")
+
+    @contexts = []
+
+    temp_contexts.each do |temp_context|
+      if temp_context.description =~ /#{search}[^0-9]/
+        @contexts << temp_context
+      end
     end
   end
 

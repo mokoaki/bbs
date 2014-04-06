@@ -9,8 +9,6 @@ class PlatesController < ApplicationController
       redirect_to root_path
       return
     end
-
-    @bbs_threads = @plate.bbs_threads
   end
 
   def create
