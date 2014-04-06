@@ -1,11 +1,13 @@
 <% if signed_in?%>
   <div class="header">
-    <% if current_user.admin? || current_user.super_admin? %>
-      <%= link_to '板管理', plates_path %>
+    <% if super_admin? %>
       <%= link_to 'ユーザ管理' %>
     <% end %>
 
     <%= link_to '情報管理' %>
     <%= link_to 'ログアウト', signout_path, method: 'delete' %>
+
+    admin[<%= admin? %>]
+    super_admin[<%= super_admin? %>]
   </div>
 <% end %>

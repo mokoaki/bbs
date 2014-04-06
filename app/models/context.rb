@@ -7,4 +7,5 @@ class Context < ActiveRecord::Base
   validates :bbs_thread_id, presence: true
   validates :user_id,       presence: true
   validates :description,   presence: true
+  validates :no,            presence: true
 end

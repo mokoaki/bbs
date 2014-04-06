@@ -3,8 +3,13 @@ Bbs::Application.routes.draw do
 
   resources :sessions, only: [:create]
   resources :users, only: [:edit, :update]
-  resources :plates, only: [:index, :create, :update, :destroy]
-  resources :bbs_threads, only: [:show]
+
+  resources :plates, only: [:show, :create, :destroy]
+  patch 'plates/update', to: 'plates#update'
+
+  resources :bbs_threads, only: [:show, :create, :destroy]
+  patch 'bbs_threads/update', to: 'bbs_threads#update'
+
   resources :contexts, only: [:show, :create] do
     member do
       post :recontexts

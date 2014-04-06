@@ -1,8 +1,9 @@
 class PlatesController < ApplicationController
   before_action :no_login_user_goto_root
+  before_action :no_super_admin_user_goto_root, only: [:create, :update, :destroy]
 
   def show
-    @plate = current_user.plates.find_by(id: params[:id])
+    @plate = get_plate_by_id(params[:id])
 
     if @plate.nil?
       redirect_to root_path
@@ -12,25 +13,33 @@ class PlatesController < ApplicationController
     @bbs_threads = @plate.bbs_threads
   end
 
-  def index
-    if current_user.super_admin?
-      @plates = Plate.where(nil)
-    else
-      @plates = curren_user.plates
+  def create
+    Plate.create(plate_params)
+
+    redirect_to :back
+  end
+
+  def update
+    params[:plates].each do |plate|
+      Plate.update(plate[:id], name: plate[:name])
     end
 
-    @plate = Plate.new
+    redirect_to :back
   end
 
-  def create
-    @plate = Plate.create(plate_params)
-    redirect_to plates_path
-  end
+  def destroy
+    Plate.destroy(params[:id])
 
+    redirect_to :back
+  end
 
   private
 
   def plate_params
-    params.require(:plate).permit(:name)
+    @plate_params ||= params.require(:plate).permit(:name)
+  end
+
+  def no_super_admin_user_goto_root
+    redirect_to(signin_path) if !super_admin?
   end
 end
