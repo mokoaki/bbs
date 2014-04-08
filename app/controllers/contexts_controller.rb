@@ -18,7 +18,7 @@ class ContextsController < ApplicationController
     context.no      = Context.where(bbs_thread_id: params[:context][:bbs_thread_id]).size + 1
 
     if context.valid?
-      #no����Ă���P�����čăg���C
+      #no取られてたら１足して再トライ
       while context.id.nil?
         context.save rescue
         context.no += 1
@@ -41,6 +41,9 @@ class ContextsController < ApplicationController
         @contexts << temp_context
       end
     end
+
+     #非同期処理時に逆順の方が都合がいい 表示が逆になるから
+     @contexts.reverse!
   end
 
   private
