@@ -1,34 +1,11 @@
 <div class="green_content">
   <div class="inner_content">
-    スレッド一覧<br />
+    スレ一覧<br />
 
     <% if admin? %>
-
-      <%= form_tag bbs_threads_update_path, method: :patch do %>
-        <% get_bbs_threads_by_plate_id(@plate.id).each do |bbs_thread| %>
-          <%= hidden_field_tag 'bbs_threads[]id',   bbs_thread.id %>
-          <%= text_field_tag   'bbs_threads[]name', bbs_thread.name %>
-          <%= link_to "#{bbs_thread.name} (#{bbs_thread.contexts.size})", bbs_thread %>
-          <%= link_to '削除', bbs_thread, method: :delete, data: { confirm: 'あー' } %><br />
-        <% end %>
-
-        <%= submit_tag('更新', :data => {:disable_with => '更新'}) %>
-      <% end %>
-
-      <%= form_for BbsThread.new(plate_id: @plate.id) do |f| %>
-        <%= f.hidden_field :plate_id %>
-        <%= f.text_field :name %><br />
-        <%= text_area :context, :description, rows: 5, cols: 64 %><br />
-        <%= f.submit 'スレッド新規作成', :data => {:disable_with => 'スレッド新規作成'} %>
-      <% end %>
-
+      <%= render 'shared/bbs_threads_admin' %>
     <% else%>
-
-      <% get_bbs_threads_by_plate_id(@plate.id).each do |bbs_thread| %>
-        <%= link_to "#{bbs_thread.name} (#{bbs_thread.contexts.size})", bbs_thread %>
-      <% end %>
-
+      <%= render 'shared/bbs_threads_user' %>
     <% end %>
-
   </div>
 </div>

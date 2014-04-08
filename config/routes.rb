@@ -16,6 +16,6 @@ Bbs::Application.routes.draw do
     end
   end
 
-  match '/signin',  to: 'sessions#new',         via: 'get'
-  match '/signout', to: 'sessions#destroy',     via: 'delete'
+  get    '/signin',  to: 'sessions#new'
+  delete '/signout', to: 'sessions#destroy'
 end

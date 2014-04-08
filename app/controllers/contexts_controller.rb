@@ -37,7 +37,7 @@ class ContextsController < ApplicationController
     @contexts = []
 
     temp_contexts.each do |temp_context|
-      if temp_context.description =~ /#{search}[^0-9]/
+      if temp_context.description =~ /#{search}([^0-9]|\z)/
         @contexts << temp_context
       end
     end

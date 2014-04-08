@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   before_save :before_save_action
   before_create :create_remember_token
 
+  default_scope -> { select(:name) }
+  scope :normal_select, -> { select(:id, :email, :name, :password_digest, :remember_token, :super_admin, :admin) }
+
   has_many :user_plates, dependent: :destroy
   has_many :plates, :through => :user_plates, source: :plate
 

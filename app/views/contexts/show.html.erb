@@ -2,11 +2,11 @@
 <%= render 'shared/plate' %>
 <%= render 'shared/bbs_threads' %>
 
-<%= render 'shared/thread', bbs_thread: @bbs_thread, contexts: [@context] %>
+<%= render 'shared/bbs_thread', bbs_thread: @bbs_thread, contexts: [@context] %>
 
 <script type="text/javascript">
   $(function(){
     //この関数のトリガはこの方法しかないのか？そんな訳がない
-    re_contexts_update(<%= @bbs_thread.id %>, <%= @context.id %>, 30);
+    re_contexts_update(<%= @bbs_thread.id %>, <%= @context.id %>, 50);
   });
 </script>

@@ -26,4 +26,7 @@ Bbs::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # bcryptのコスト関数を下げることでテストの速度を向上させる。
+  ActiveModel::SecurePassword.min_cost = true
 end

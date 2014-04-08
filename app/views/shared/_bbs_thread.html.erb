@@ -1,7 +1,7 @@
 <div class="gray_content">
   <div class="inner_content">
     <div class="bbs_thread_<%= bbs_thread.id %>">
-      <span class="title"><%= bbs_thread.name %></span><br />
+      <%= link_to bbs_thread.name, bbs_thread, class: 'thread_title' %><br />
 
       <%= render partial: 'shared/context', collection: contexts %>
 

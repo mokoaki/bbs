@@ -3,29 +3,9 @@
     板一覧<br />
 
     <% if super_admin? %>
-
-      <%= form_tag plates_update_path, method: :patch do %>
-        <% get_plates.each do |plate| %>
-          <%= hidden_field_tag 'plates[]id',   plate.id %>
-          <%= text_field_tag   'plates[]name', plate.name %>
-          <%= link_to plate.name, plate %>
-          <%= link_to '削除', plate, method: :delete, data: { confirm: 'あー' } %><br />
-        <% end %>
-
-        <%= submit_tag('更新', :data => {:disable_with => '更新'}) %>
-      <% end %>
-
-      <%= form_for Plate.new do |f| %>
-        <%= f.text_field :name %><br />
-        <%= f.submit '板新規作成', :data => {:disable_with => '板新規作成'} %>
-      <% end %>
-
+      <%= render 'shared/plates_admin' %>
     <% else%>
-
-      <% get_plates.each do |plate| %>
-        <%= link_to plate.name, plate %>
-      <% end %>
-
+      <%= render 'shared/plates_user' %>
     <% end %>
   </div>
 </div>
