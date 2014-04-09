@@ -2,7 +2,7 @@
   <% get_bbs_threads_by_plate_id(@plate.id).each do |bbs_thread| %>
     <%= hidden_field_tag 'bbs_threads[]id',   bbs_thread.id %>
     <%= text_field_tag   'bbs_threads[]name', bbs_thread.name %>
-    <%= link_to "#{bbs_thread.name} (#{bbs_thread.contexts.size})", bbs_thread %>
+    <%= link_to "#{bbs_thread.name} (#{bbs_thread.context_count})", bbs_thread %>
     <%= link_to '削除', bbs_thread, method: :delete, data: { confirm: 'あー' } %><br />
   <% end %>
 

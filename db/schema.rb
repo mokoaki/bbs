@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20140402094505) do
   create_table "bbs_threads", force: true do |t|
     t.integer  "plate_id"
     t.string   "name"
+    t.integer  "context_count"
     t.datetime "updated_at"
   end
 
@@ -23,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140402094505) do
 
   create_table "contexts", force: true do |t|
     t.integer  "user_id"
+    t.string   "user_name"
     t.integer  "bbs_thread_id"
     t.integer  "no"
     t.text     "description"

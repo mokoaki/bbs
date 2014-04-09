@@ -1,21 +1,23 @@
 require 'spec_helper'
 
 describe User do
-  before do
-    @user = FactoryGirl.build(:valid_user)
-  end
+  let(:valid_user) { FactoryGirl.build(:valid_user) }
 
-  subject { @user }
+  subject { valid_user }
 
   describe 'メソッドチェック' do
-    it { should respond_to(:name) }
-    it { should respond_to(:email) }
-    it { should respond_to(:password_digest) }
-    it { should respond_to(:password) }
-    it { should respond_to(:password_confirmation) }
-    it { should respond_to(:remember_token) }
-    it { should respond_to(:admin) }
-    it { should respond_to(:super_admin) }
+    it { expect respond_to(:id) }
+    it { expect respond_to(:email) }
+    it { expect respond_to(:name) }
+    it { expect respond_to(:password_digest) }
+    it { expect respond_to(:password) }
+    it { expect respond_to(:password_confirmation) }
+    it { expect respond_to(:remember_token) }
+    it { expect respond_to(:super_admin) }
+    it { expect respond_to(:admin) }
+    it { expect respond_to(:enable) }
+    it { expect respond_to(:updated_at) }
+    it { expect respond_to(:created_at) }
 
     context 'クラスメソッドチェック' do
       let(:remember_token) { User.new_remember_token }
@@ -24,10 +26,26 @@ describe User do
       it { expect(User.encrypt(remember_token)).not_to be_blank }
     end
 
-    context 'プライベートメソッドチェック' do
-      let(:remember_token) { User.new_remember_token }
+    describe 'プライベートメソッドチェック' do
+      context 'create_remember_token' do
+        let(:remember_token) { User.new_remember_token }
 
-      its(:remember_token) { should_not eq User.encrypt(remember_token) }
+        its(:remember_token) { should_not eq User.encrypt(remember_token) }
+      end
+
+      context 'before_save_action' do
+        let(:same_user) { valid_user.dup }
+
+        before do
+          same_user.email.upcase!
+          same_user.admin = false
+          same_user.super_admin = true
+          same_user.save
+        end
+
+         it { expect(same_user.email).to eq valid_user.email }
+         it { expect(same_user.admin).to be_true }
+      end
     end
   end
 
@@ -38,55 +56,55 @@ describe User do
   describe 'バリデーションチェック' do
     describe '名前' do
       it '空白' do
-        @user.name = ' '
+        valid_user.name = ' '
         should_not be_valid
 
-        @user.name = ''
+        valid_user.name = ''
         should_not be_valid
       end
 
       it '長い' do
-        @user.name = 'a' * 32
+        valid_user.name = 'a' * 32
         should be_valid
 
-        @user.name = 'a' * 33
+        valid_user.name = 'a' * 33
         should_not be_valid
       end
     end
 
     describe 'パスワード' do
       it '空白' do
-        @user.password = ' '
-        @user.password_confirmation = ' '
+        valid_user.password = ' '
+        valid_user.password_confirmation = ' '
         should_not be_valid
 
-        @user.password = ''
-        @user.password_confirmation = ''
+        valid_user.password = ''
+        valid_user.password_confirmation = ''
         should_not be_valid
       end
 
       it '再入力不一致' do
-        @user.password_confirmation = 'mismatch'
+        valid_user.password_confirmation = 'mismatch'
         should_not be_valid
       end
 
       it '短い' do
-        @user.password              = 'a' * 6
-        @user.password_confirmation = 'a' * 6
+        valid_user.password              = 'a' * 6
+        valid_user.password_confirmation = 'a' * 6
         should be_valid
 
-        @user.password              = 'a' * 5
-        @user.password_confirmation = 'a' * 5
+        valid_user.password              = 'a' * 5
+        valid_user.password_confirmation = 'a' * 5
         should_not be_valid
       end
     end
 
     describe 'Eメール' do
       it '空白' do
-        @user.email = ' '
+        valid_user.email = ' '
         should_not be_valid
 
-        @user.email = ''
+        valid_user.email = ''
         should_not be_valid
       end
 
@@ -95,7 +113,7 @@ describe User do
           addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
 
           addresses.each do |valid_address|
-            @user.email = valid_address
+            valid_user.email = valid_address
 
             should be_valid
           end
@@ -105,7 +123,7 @@ describe User do
           addresses = %w[user@foo,com user_at_foo.org example.user@foo. example.user@foo foo@bar_baz.com foo@bar+baz.com]
 
           addresses.each do |invalid_address|
-            @user.email = invalid_address
+            valid_user.email = invalid_address
 
             should_not be_valid
           end
@@ -113,15 +131,15 @@ describe User do
       end
 
       it '重複' do
-        same_email_user = @user.dup
+        same_email_user = valid_user.dup
         same_email_user.save
 
         should_not be_valid
       end
 
       it '大文字にしても重複チェック対象' do
-        same_email_user = @user.dup
-        same_email_user.email = @user.email.upcase
+        same_email_user = valid_user.dup
+        same_email_user.email = valid_user.email.upcase
         same_email_user.save
 
         should_not be_valid
@@ -130,11 +148,11 @@ describe User do
   end
 
   describe '認証チェック'do
-    before { @user.save }
-    let(:found_user) { User.find_by(email: @user.email) }
+    before { valid_user.save }
+    let(:found_user) { User.find_by(email: valid_user.email) }
 
     it 'OKパターン' do
-      should eq found_user.authenticate(@user.password)
+      should eq found_user.authenticate(valid_user.password)
     end
 
     describe 'NGパターン' do
@@ -149,9 +167,9 @@ describe User do
     let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
 
     it do
-      @user.email = mixed_case_email
-      @user.save
-      expect(@user.reload.email).to eq mixed_case_email.downcase
+      valid_user.email = mixed_case_email
+      valid_user.save
+      expect(valid_user.reload.email).to eq mixed_case_email.downcase
     end
   end
 
@@ -159,14 +177,14 @@ describe User do
     let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
 
     it do
-      @user.email = mixed_case_email
-      @user.save
-      expect(@user.reload.email).to eq mixed_case_email.downcase
+      valid_user.email = mixed_case_email
+      valid_user.save
+      expect(valid_user.reload.email).to eq mixed_case_email.downcase
     end
   end
 
   describe 'save時にremember_tokenを保存する' do
-    before { @user.save }
+    before { valid_user.save }
     its(:remember_token) { should_not be_blank }
   end
 
@@ -178,22 +196,22 @@ describe User do
 
     describe '権限変更チェック' do
       before do
-        @user.save!
+        valid_user.save!
       end
 
       it 'admin権限' do
-        @user.toggle!(:admin)
+        valid_user.toggle!(:admin)
         should be_admin
 
-        @user.toggle!(:admin)
+        valid_user.toggle!(:admin)
         should_not be_admin
       end
 
       it 'super_admin権限' do
-        @user.toggle!(:super_admin)
+        valid_user.toggle!(:super_admin)
         should be_super_admin
 
-        @user.toggle!(:super_admin)
+        valid_user.toggle!(:super_admin)
         should_not be_super_admin
       end
     end

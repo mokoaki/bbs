@@ -1,6 +1,6 @@
 module ApplicationHelper
   def youbi(wday)
-    (@youbi ||= ['月','火','水','木','金','土','日'])[wday]
+    (@youbi ||= ['日','月','火','水','木','金','土'])[wday]
   end
 
   def wrap(description)

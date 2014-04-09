@@ -2,6 +2,7 @@ class CreateContexts < ActiveRecord::Migration
   def change
     create_table :contexts do |t|
       t.integer  :user_id
+      t.string   :user_name
       t.integer  :bbs_thread_id
       t.integer  :no
       t.text     :description

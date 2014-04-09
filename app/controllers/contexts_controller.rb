@@ -13,9 +13,10 @@ class ContextsController < ApplicationController
   end
 
   def create
-    context         = Context.new(context_params)
-    context.user_id = current_user.id
-    context.no      = Context.where(bbs_thread_id: params[:context][:bbs_thread_id]).size + 1
+    context           = Context.new(context_params)
+    context.user_id   = current_user.id
+    context.user_name = current_user.name
+    # context.no        = Context.where(bbs_thread_id: params[:context][:bbs_thread_id]).size + 1
 
     if context.valid?
       #no取られてたら１足して再トライ
@@ -26,13 +27,15 @@ class ContextsController < ApplicationController
     end
 
     @bbs_thread_id = context.bbs_thread_id
-    @contexts      = Context.where(bbs_thread_id: @bbs_thread_id).where("no >= ?", context_params['no'])
+    @contexts      = Context.where(bbs_thread_id: @bbs_thread_id).where("no >= ?", context_params['no']).order(:id)
+
+    BbsThread.update(@bbs_thread_id, context_count: context.no)
   end
 
   def recontexts
     search = ">>#{params[:no]}"
 
-    temp_contexts = Context.where("bbs_thread_id = #{params[:bbs_thread_id]}").where("#{params[:no]} < no").where("description like ?", "%#{search}%")
+    temp_contexts = Context.where("bbs_thread_id = #{params[:bbs_thread_id]}").where("#{params[:no]} < no").where("description like ?", "%#{search}%").order(id: :desc)
 
     @contexts = []
 
@@ -41,9 +44,6 @@ class ContextsController < ApplicationController
         @contexts << temp_context
       end
     end
-
-     #非同期処理時に逆順の方が都合がいい 表示が逆になるから
-     @contexts.reverse!
   end
 
   private

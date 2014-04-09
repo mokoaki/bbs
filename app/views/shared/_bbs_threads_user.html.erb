@@ -1,3 +1,3 @@
 <% get_bbs_threads_by_plate_id(@plate.id).each_with_index do |bbs_thread, index| %>
-  <%= link_to "#{index + 1}: #{bbs_thread.name} (#{bbs_thread.contexts.size})", bbs_thread %>
+  <%= link_to "#{index + 1}: #{bbs_thread.name} (#{bbs_thread.context_count})", bbs_thread %>
 <% end %>
