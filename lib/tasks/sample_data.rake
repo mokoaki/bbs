@@ -1,9 +1,9 @@
 namespace :db do
   task populate: :environment do
-    user_num       = 5
-    plate_num      = 3
+    user_num       = 5000
+    plate_num      = 30
     bbs_thread_num = 20
-    context_num    = 11
+    context_num    = 500
 
     p "テストユーザ作成 #{user_num}人"
 
