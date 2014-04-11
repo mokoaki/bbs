@@ -1,7 +1,9 @@
-bundle exec spring rake db:drop
 bundle exec spring rake db:create
 bundle exec spring rake db:migrate
 bundle exec spring rake db:populate
+rake unicorn:start
+
+memo
 
 name: "テストユーザ",     email: "user@gmail.com",   password: "11111111"
 name: "adminユーザ",      email: "admin@gmail.com",  password: "11111111"

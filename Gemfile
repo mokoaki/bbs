@@ -7,6 +7,7 @@ gem 'mysql2'
 gem 'bootstrap-sass', '2.3.2.0'
 
 group :development, :test do
+  gem 'rails-erd'
   gem "spring"
   gem 'spring-commands-rspec'
   gem 'rspec-rails', '2.13.1'
@@ -26,4 +27,4 @@ gem 'jquery-rails', '3.0.4'
 gem 'turbolinks', '1.1.1'
 gem 'jbuilder', '1.0.2'
 
-#gem 'unicorn'
+gem 'unicorn'

@@ -69,8 +69,4 @@ class BbsThreadsController < ApplicationController
   def context_params
     params.require(:context).permit(:description)
   end
-
-  def no_admin_user_goto_root
-    redirect_to(signin_path) if !admin?
-  end
 end

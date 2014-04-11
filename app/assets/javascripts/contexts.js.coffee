@@ -10,3 +10,9 @@
     type: "POST"
     url: "/contexts/" + context_id + "/recontexts.js"
     data: "no=" + context_no + "&bbs_thread_id=" + bbs_thread_id + "&margin=" + margin
+
+@context_abone = (context_id) ->
+  $("#context_" + context_id + " .context_user_name").text("あぼーん")
+  $("#context_" + context_id + " .context_created_at").text("あぼーん")
+  $("#context_" + context_id + " .context_description").text("あぼーん")
+  $("#context_" + context_id + " .context_destroy_button").hide()

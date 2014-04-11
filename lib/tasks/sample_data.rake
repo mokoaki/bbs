@@ -1,9 +1,9 @@
 namespace :db do
   task populate: :environment do
-    user_num       = 5000
+    user_num       = 5
     plate_num      = 30
     bbs_thread_num = 20
-    context_num    = 500
+    context_num    = 20
 
     p "テストユーザ作成 #{user_num}人"
 
@@ -35,6 +35,9 @@ namespace :db do
         user.user_plates.create(plate_id: plate.id)
       end
     end
+
+    #GC期待
+    @users = nil
 
     p "テストスレ作成 #{plate_num}板 x #{bbs_thread_num}スレ"
 

@@ -4,7 +4,9 @@ body {
   background-image: url("/assets/ba.png");
   margin: 0px;
   overflow-x: hidden;
-  font-family: "ＭＳ Ｐゴシック";
+  font-family: IPAMonaPGothic,'ＭＳ Ｐゴシック',sans-serif;
+  font-size  : 16px;
+  line-height: 18px;
 }
 
 div.header {
@@ -59,7 +61,7 @@ a.thread_title {
   font-weight: bold;
 }
 
-span.user_name {
+span.context_user_name {
   color: green;
   font-weight: bold;
 }

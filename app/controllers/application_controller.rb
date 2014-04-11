@@ -31,6 +31,12 @@ class ApplicationController < ActionController::Base
     @get_bbs_threads_by_plate_id[plate_id] ||= BbsThread.where(plate_id: plate_id).where(plate_id: get_plates.pluck(:id))
   end
 
+  def get_context_by_context_id(context_id)
+    #’P‚ÉŽ‚Á‚Ä‚­‚é‚¾‚¯AŒ ŒÀ–³Ž‹
+    @get_context_by_context_id ||= {}
+    @get_context_by_context_id[context_id] ||= Context.find_by(id: context_id)
+  end
+
   def auth_check_by_plate_id(plate_id)
     return true if super_admin?
 
@@ -84,5 +90,9 @@ class ApplicationController < ActionController::Base
 
   def no_login_user_goto_root
     redirect_to(signin_path) if !signed_in?
+  end
+
+  def no_admin_user_goto_root
+    redirect_to(signin_path) if !admin?
   end
 end

@@ -10,7 +10,7 @@ Bbs::Application.routes.draw do
   resources :bbs_threads, only: [:show, :create, :destroy]
   patch 'bbs_threads/update', to: 'bbs_threads#update'
 
-  resources :contexts, only: [:show, :create] do
+  resources :contexts, only: [:show, :create, :destroy] do
     member do
       post :recontexts
     end

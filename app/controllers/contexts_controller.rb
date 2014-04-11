@@ -1,11 +1,15 @@
 class ContextsController < ApplicationController
   before_action :no_login_user_goto_root
+  before_action :no_admin_user_goto_root, only: [:destroy]
 
   def show
+    #auth_check_by_context_id のチェックをちゃんとする　動作未確認
+
     @context = Context.find_by(id: params[:id])
 
-    if @context.nil?
+    if @context.nil? || auth_check_by_context_id(@context.id).nil?
       redirect_to root_path
+      return
     end
 
     @bbs_thread = @context.bbs_thread
@@ -46,9 +50,33 @@ class ContextsController < ApplicationController
     end
   end
 
+  def destroy
+    #auth_check_by_context_id のチェックをちゃんとする　動作未確認
+
+    context = Context.find_by(id: params[:id])
+
+    if context.nil? || auth_check_by_context_id(context.id).nil?
+      raise '( ･`ω･´)'
+    end
+
+    @deleted_context_id = context.id
+
+    context.delete_flg = true
+    context.save
+  end
+
   private
 
   def context_params
     params.require(:context).permit(:bbs_thread_id, :description, :no)
+  end
+
+  def auth_check_by_context_id(context_id)
+    return true if super_admin?
+
+    context = get_context_by_context_id(context_id)
+    bbs_thread = get_bbs_thread_by_id(context.bbs_thread_id)
+
+    return UserPlate.find_by(user_id: current_user.id, plate_id: bbs_thread.plate_id)
   end
 end

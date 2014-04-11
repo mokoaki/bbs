@@ -1,13 +1,14 @@
 class CreateContexts < ActiveRecord::Migration
   def change
     create_table :contexts do |t|
-      t.integer  :user_id
-      t.string   :user_name
-      t.integer  :bbs_thread_id
-      t.integer  :no
-      t.text     :description
+      t.belongs_to :user
+      t.string     :user_name
+      t.belongs_to :bbs_thread
+      t.integer    :no
+      t.text       :description
+      t.boolean    :delete_flg, default: false
 
-      t.datetime :created_at
+      t.datetime   :created_at
     end
 
     add_index :contexts, :bbs_thread_id

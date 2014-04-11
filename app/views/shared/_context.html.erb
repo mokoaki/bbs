@@ -1,8 +1,10 @@
 <div id="context_<%= context.id %>" data-no="<%= context.no %>" class="context_body">
-  <% youbi = youbi(context.created_at.wday) %>
-  <%= link_to(context.no, context) %> ：名前：<span class="user_name"><%= context.user_name %></span> ：<%= context.created_at.strftime("%Y/%m/%d/(#{youbi}) %T") %><br />
+  <div>
+    <%= link_to(context.no, context) %> ：名前：<span class="context_user_name"><%= context.delete_flg ? 'あぼーん' : context.user_name %></span> ：<span class="context_created_at"><%= context.delete_flg ? 'あぼーん' : context.created_at.strftime("%Y/%m/%d/(#{youbi(context.created_at.wday)}) %T") %></span>
+    <%= button_to('削除', context, method: :delete, remote: true, class: 'context_destroy_button', data: { confirm: '確認' }) unless context.delete_flg || !admin? %>
+  </div>
 
   <div class="context_description">
-    <%= raw wrap context.description %>
+    <%= context.delete_flg ? 'あぼーん' : raw(wrap context.description) %>
   </div>
 </div>

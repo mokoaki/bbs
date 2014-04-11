@@ -1,8 +1,9 @@
 class CreateUserPlates < ActiveRecord::Migration
   def change
-    create_table :user_plates do |t|
-      t.string  :user_id
-      t.string  :plate_id
+    #create_table :user_plates do |t|
+    create_table(:user_plates, id: false) do |t|
+      t.belongs_to  :user
+      t.belongs_to  :plate
     end
 
     add_index :user_plates, :user_id

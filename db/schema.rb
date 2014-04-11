@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140402094505) do
     t.integer  "bbs_thread_id"
     t.integer  "no"
     t.text     "description"
+    t.boolean  "delete_flg",    default: false
     t.datetime "created_at"
   end
 
@@ -39,9 +40,9 @@ ActiveRecord::Schema.define(version: 20140402094505) do
     t.string "name"
   end
 
-  create_table "user_plates", force: true do |t|
-    t.string "user_id"
-    t.string "plate_id"
+  create_table "user_plates", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "plate_id"
   end
 
   add_index "user_plates", ["plate_id"], name: "index_user_plates_on_plate_id", using: :btree
