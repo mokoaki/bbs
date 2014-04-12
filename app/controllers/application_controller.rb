@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
     cookies.delete(:remember_token)
   end
 
-  def no_login_user_goto_root
+  def no_login_user_goto_signin_path
     redirect_to(signin_path) if !signed_in?
   end
 

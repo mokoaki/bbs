@@ -1,6 +1,9 @@
 class PlatesController < ApplicationController
-  before_action :no_login_user_goto_root
+  before_action :no_login_user_goto_signin_path
   before_action :no_super_admin_user_goto_root, only: [:create, :update, :destroy]
+
+  def index
+  end
 
   def show
     @plate = get_plate_by_id(params[:id])

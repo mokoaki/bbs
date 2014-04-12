@@ -1,1 +1,39 @@
-<%= render 'shared/plates' %>
+<div class="green_content">
+  <div class="inner_content">
+    <%= link_to '戻るボタン的な', root_path %>
+  </div>
+</div>
+
+<div class="green_content">
+  <div class="inner_content">
+    <%= text_field_tag('search_name', '') %>
+    <%= text_field_tag('search_email', '') %>
+    <%= button_tag('検索', id: 'search_button') %>
+  </div>
+</div>
+
+<div class="green_content">
+  <div class="inner_content">
+    <div>
+      <div>
+        <%= button_tag('<<前', id: 'before_page_button') %>
+        <%= button_tag('次>>', id:   'next_page_button') %>
+      </div>
+
+      <div>
+        <span id="page">1</span>ページ
+      </div>
+    </div>
+    <div id="users_area"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('#search_button').click(new_users_search);
+    $('#before_page_button').click(before_page_button);
+    $('#next_page_button').click(next_page_button);
+
+    $('#search_button').trigger('click');
+  });
+</script>

@@ -1,6 +1,6 @@
 bundle exec spring rake db:create
 bundle exec spring rake db:migrate
-bundle exec spring rake db:populate
+bundle exec spring rake db:test_data
 rake unicorn:start
 
 memo

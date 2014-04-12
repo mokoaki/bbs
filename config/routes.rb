@@ -1,8 +1,14 @@
 Bbs::Application.routes.draw do
-  root 'users#index'
+  root 'plates#index'
 
   resources :sessions, only: [:create]
-  resources :users, only: [:edit, :update]
+
+  resources :users, only: [:edit, :update, :index] do
+    collection do
+      post :search
+      post :plate_access
+    end
+  end
 
   resources :plates, only: [:show, :create, :destroy]
   patch 'plates/update', to: 'plates#update'

@@ -1,5 +1,5 @@
 class BbsThreadsController < ApplicationController
-  before_action :no_login_user_goto_root
+  before_action :no_login_user_goto_signin_path
   before_action :no_admin_user_goto_root, only: [:create, :update, :destroy]
 
   def show

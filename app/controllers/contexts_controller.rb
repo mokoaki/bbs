@@ -1,5 +1,5 @@
 class ContextsController < ApplicationController
-  before_action :no_login_user_goto_root
+  before_action :no_login_user_goto_signin_path
   before_action :no_admin_user_goto_root, only: [:destroy]
 
   def show
@@ -33,7 +33,7 @@ class ContextsController < ApplicationController
     @bbs_thread_id = context.bbs_thread_id
     @contexts      = Context.where(bbs_thread_id: @bbs_thread_id).where("no >= ?", context_params['no']).order(:id)
 
-    BbsThread.update(@bbs_thread_id, context_count: context.no)
+    BbsThread.update(@bbs_thread_id, contexts_count: context.no)
   end
 
   def recontexts

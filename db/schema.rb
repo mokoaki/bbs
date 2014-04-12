@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20140402094505) do
   create_table "bbs_threads", force: true do |t|
     t.integer  "plate_id"
     t.string   "name"
-    t.integer  "context_count"
+    t.integer  "contexts_count"
     t.datetime "updated_at"
   end
 

@@ -3,7 +3,7 @@ class CreateBbsThreads < ActiveRecord::Migration
     create_table :bbs_threads do |t|
       t.belongs_to :plate
       t.string     :name
-      t.integer    :context_count
+      t.integer    :contexts_count
       t.datetime   :updated_at
     end
 

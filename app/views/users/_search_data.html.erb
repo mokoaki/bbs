@@ -1,0 +1,14 @@
+<div id="users_search_record_<%= user.id %>" class="users_search_record">
+  <div>
+    名前：<%= user.name %>
+    メアド：<%= user.email %>
+  </div>
+
+  <div>
+    <% get_plates.each do |plate| %>
+      <% #このfindが毎回重そう。%>
+      <% user_plate = UserPlate.find_by(plate_id: plate.id, user_id: user.id) %>
+      <%= button_tag(plate.name, id: 'plate_access_button', class: "plate_access_#{(user_plate ? 'ok' : 'ng')}", "data-plate_id" => plate.id, "data-user_id" => user.id) %>
+    <% end %>
+  </div>
+</div>

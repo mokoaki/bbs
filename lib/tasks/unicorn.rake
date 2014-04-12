@@ -1,37 +1,37 @@
 namespace :unicorn do
-  #Start unicorn
+  desc 'Start unicorn'
   task :start do
     config = rails_root + 'config/unicorn.rb'
     env = ENV['RAILS_ENV'] || 'development'
     sh "bundle exec unicorn_rails -D -c #{config} -E #{env}"
   end
 
-  #Stop unicorn
+  desc 'Stop unicorn'
   task :stop do
     unicorn_signal :QUIT
   end
 
-  #Restart unicorn with USR2
+  desc 'Restart unicorn with USR2'
   task :restart do
     unicorn_signal :USR2
   end
 
-  #Increment number of worker processes
+  desc 'Increment number of worker processes'
   task :increment do
     unicorn_signal :TTIN
   end
 
-  #Decrement number of worker processes
+  desc 'Decrement number of worker processes'
   task :decrement do
     unicorn_signal :TTOU
   end
 
-  #Unicorn pstree (depends on pstree command)"
+  desc 'Unicorn pstree (depends on pstree command)'
   task :pstree do
     sh "pstree '#{unicorn_pid}'"
   end
 
-  # Helpers
+  #Helpers
 
   def unicorn_signal(signal)
     Process.kill signal, unicorn_pid
