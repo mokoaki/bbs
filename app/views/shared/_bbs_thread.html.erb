@@ -8,9 +8,10 @@
       <span class="insert_new_contexts"></span>
 
       <div class="kakikomi">
-        <%= form_for bbs_thread.contexts.build(no: bbs_thread.contexts.last.no + 1), remote: true do |f| %>
-          <%= f.hidden_field :no %>
+        <%= form_for bbs_thread.contexts.build(plate_id: bbs_thread.plate_id, no: bbs_thread.contexts_count + 1), remote: true do |f| %>
+          <%= f.hidden_field :plate_id %>
           <%= f.hidden_field :bbs_thread_id %>
+          <%= f.hidden_field :no %>
           <%= f.submit '書き込む', :data => {:disable_with => '書き込む'} %><br />
           <%= f.text_area :description, rows: 5, cols: 64 %>
         <% end %>

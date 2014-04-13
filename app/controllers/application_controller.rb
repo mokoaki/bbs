@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def get_bbs_thread_by_id(bbs_thread_id)
     @get_bbs_thread_by_id ||= {}
-    @get_bbs_thread_by_id[bbs_thread_id] ||= BbsThread.where(plate_id: get_plates.pluck(:id)).find_by(id: bbs_thread_id)
+    @get_bbs_thread_by_id[bbs_thread_id] ||= BbsThread.where(id: bbs_thread_id).where(plate_id: get_plates.pluck(:id)).limit(1).first
   end
 
   def get_bbs_threads_by_plate_id(plate_id)
@@ -32,29 +32,32 @@ class ApplicationController < ActionController::Base
   end
 
   def get_context_by_context_id(context_id)
-    #’P‚ÉŽ‚Á‚Ä‚­‚é‚¾‚¯AŒ ŒÀ–³Ž‹
     @get_context_by_context_id ||= {}
-    @get_context_by_context_id[context_id] ||= Context.find_by(id: context_id)
+    @get_context_by_context_id[context_id] ||= Context.where(id: context_id).where(plate_id: get_plates.pluck(:id)).limit(1).first
   end
+
+  #
 
   def auth_check_by_plate_id(plate_id)
     return true if super_admin?
 
     @auth_check_by_plate_id ||= {}
-    @auth_check_by_plate_id[plate_id] ||= get_user_plates(current_user.id, plate_id)
+    @auth_check_by_plate_id[plate_id] ||= get_user_plate_by_plate_id(plate_id)
   end
 
   def auth_check_by_bbs_thread_id(bbs_thread_id)
     return true if super_admin?
 
     @auth_check_by_bbs_thread_id ||= {}
-    @auth_check_by_bbs_thread_id[bbs_thread_id] ||= get_user_plates(current_user.id, get_bbs_thread_by_id(bbs_thread_id).plate_id)
+    @auth_check_by_bbs_thread_id[bbs_thread_id] ||= get_user_plate_by_plate_id(get_bbs_thread_by_id(bbs_thread_id).plate_id)
   end
 
-  def get_user_plates(user_id, plate_id)
+  def get_user_plate_by_plate_id(plate_id)
     @get_user_plates ||= {}
-    @get_user_plates["#{user_id}_#{plate_id}"] ||= UserPlate.find_by(user_id: user_id, plate_id: plate_id)
+    @get_user_plates[plate_id] ||= UserPlate.find_by(user_id: current_user.id, plate_id: plate_id)
   end
+
+  #
 
   def current_user
     @current_user ||= User.normal_select.find_by(remember_token: User.encrypt(cookies[:remember_token]), enable: true)

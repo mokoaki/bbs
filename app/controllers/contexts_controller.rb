@@ -3,11 +3,9 @@ class ContextsController < ApplicationController
   before_action :no_admin_user_goto_root, only: [:destroy]
 
   def show
-    #auth_check_by_context_id のチェックをちゃんとする　動作未確認
+    @context = get_context_by_context_id(params[:id])
 
-    @context = Context.find_by(id: params[:id])
-
-    if @context.nil? || auth_check_by_context_id(@context.id).nil?
+    if @context.nil?
       redirect_to root_path
       return
     end
@@ -17,10 +15,12 @@ class ContextsController < ApplicationController
   end
 
   def create
+    @bbs_thread = get_bbs_thread_by_id(context_params['bbs_thread_id'])
+
     context           = Context.new(context_params)
     context.user_id   = current_user.id
     context.user_name = current_user.name
-    # context.no        = Context.where(bbs_thread_id: params[:context][:bbs_thread_id]).size + 1
+    context.no        = @bbs_thread.contexts_count + 1 #上書き
 
     if context.valid?
       #no取られてたら１足して再トライ
@@ -30,10 +30,9 @@ class ContextsController < ApplicationController
       end
     end
 
-    @bbs_thread_id = context.bbs_thread_id
-    @contexts      = Context.where(bbs_thread_id: @bbs_thread_id).where("no >= ?", context_params['no']).order(:id)
+    @contexts = Context.where(bbs_thread_id: @bbs_thread.id).where("no >= ?", context_params['no']).order(:id)
 
-    BbsThread.update(@bbs_thread_id, contexts_count: context.no)
+    @bbs_thread.update_attributes(contexts_count: context.no)
   end
 
   def recontexts
@@ -51,11 +50,9 @@ class ContextsController < ApplicationController
   end
 
   def destroy
-    #auth_check_by_context_id のチェックをちゃんとする　動作未確認
+    context = get_context_by_context_id(params[:id])
 
-    context = Context.find_by(id: params[:id])
-
-    if context.nil? || auth_check_by_context_id(context.id).nil?
+    if context.nil?
       raise '( ･`ω･´)'
     end
 
@@ -68,15 +65,6 @@ class ContextsController < ApplicationController
   private
 
   def context_params
-    params.require(:context).permit(:bbs_thread_id, :description, :no)
-  end
-
-  def auth_check_by_context_id(context_id)
-    return true if super_admin?
-
-    context = get_context_by_context_id(context_id)
-    bbs_thread = get_bbs_thread_by_id(context.bbs_thread_id)
-
-    return UserPlate.find_by(user_id: current_user.id, plate_id: bbs_thread.plate_id)
+    params.require(:context).permit(:plate_id, :bbs_thread_id, :description, :no)
   end
 end

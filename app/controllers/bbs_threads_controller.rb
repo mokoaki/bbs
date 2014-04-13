@@ -10,30 +10,29 @@ class BbsThreadsController < ApplicationController
       return
     end
 
-    @plate       = @bbs_thread.plate
+    @plate = @bbs_thread.plate
   end
 
   def create
-    #権限チェック
-    if auth_check_by_plate_id(bbs_thread_params[:plate_id])
-      begin
-        BbsThread.transaction do
-          bbs_thread = BbsThread.create(bbs_thread_params)
+    plate = get_plate_by_id(params[:bbs_thread][:plate_id])
 
-          context = bbs_thread.contexts.build(context_params)
-          context.user_id = current_user.id
-          context.no      = 1
-          context.save!
+    begin
+      BbsThread.transaction do
+        bbs_thread = plate.bbs_threads.create(name: params[:bbs_thread][:name], contexts_count: 1)
 
-          redirect_to bbs_thread
-        end
-      rescue ActiveRecord::RecordInvalid
-        logger.info('未記入項目 ロールバック')
-        redirect_to :back
-        return
+        context           = bbs_thread.contexts.build(context_params)
+        context.plate_id  = bbs_thread.plate_id
+        context.user_id   = current_user.id
+        context.user_name = current_user.name
+        context.no        = 1
+        context.save!
+
+        redirect_to bbs_thread
       end
-    else
+    rescue ActiveRecord::RecordInvalid
+      logger.info('未記入項目 ロールバック')
       redirect_to :back
+      return
     end
   end
 
@@ -62,9 +61,9 @@ class BbsThreadsController < ApplicationController
 
   private
 
-  def bbs_thread_params
-    @bbs_thread_params ||= params.require(:bbs_thread).permit(:plate_id, :name)
-  end
+  #def bbs_thread_params
+  #  @bbs_thread_params ||= params.require(:bbs_thread).permit(:plate_id, :name)
+  #end
 
   def context_params
     params.require(:context).permit(:description)

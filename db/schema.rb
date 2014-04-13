@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140402094505) do
   create_table "contexts", force: true do |t|
     t.integer  "user_id"
     t.string   "user_name"
+    t.integer  "plate_id"
     t.integer  "bbs_thread_id"
     t.integer  "no"
     t.text     "description"
@@ -35,6 +36,7 @@ ActiveRecord::Schema.define(version: 20140402094505) do
   add_index "contexts", ["bbs_thread_id", "no"], name: "index_contexts_on_bbs_thread_id_and_no", unique: true, using: :btree
   add_index "contexts", ["bbs_thread_id"], name: "index_contexts_on_bbs_thread_id", using: :btree
   add_index "contexts", ["no"], name: "index_contexts_on_no", using: :btree
+  add_index "contexts", ["plate_id"], name: "index_contexts_on_plate_id", using: :btree
 
   create_table "plates", force: true do |t|
     t.string "name"

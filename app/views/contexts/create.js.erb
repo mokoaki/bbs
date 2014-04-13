@@ -1,3 +1,5 @@
 <% if @contexts.any? %>
-  contexts_update(<%= @bbs_thread_id %>, <%= @contexts.last.no %>, "<%= escape_javascript(raw(render partial: 'shared/context', collection: @contexts)) %>");
+  contexts_update(<%= @bbs_thread.id %>, "<%= escape_javascript(raw(render partial: 'shared/context', collection: @contexts)) %>");
 <% end %>
+
+contexts_no_update(<%= @bbs_thread.id %>, <%= @bbs_thread.contexts.count %>)

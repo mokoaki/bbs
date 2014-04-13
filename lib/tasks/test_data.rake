@@ -1,10 +1,10 @@
 namespace :db do
   desc 'insert test data'
   task test_data: :environment do
-    user_num       = 5000
-    plate_num      = 30
-    bbs_thread_num = 20
-    context_num    = 500
+    user_num       = 5
+    plate_num      = 10
+    bbs_thread_num = 10
+    context_num    = 20
 
     users       = []
     plates      = []
@@ -49,7 +49,7 @@ namespace :db do
 
           (1..context_num).each do |no|
             user = users.sample
-            bbs_thread.contexts.build(user_id: user.id, user_name: user.name, no: no, description: ">>#{(1..no).to_a.sample}\n内容内容内容内容内容").save(:validate => false)
+            bbs_thread.contexts.build(user_id: user.id, user_name: user.name, plate_id: plate.id, no: no, description: ">>#{(1..no).to_a.sample}\n内容内容内容内容内容").save(:validate => false)
           end
 
           bbs_thread.contexts_count = bbs_thread.contexts.size
