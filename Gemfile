@@ -7,6 +7,7 @@ gem 'mysql2'
 gem 'bootstrap-sass', '2.3.2.0'
 
 group :development, :test do
+  gem 'whenever', :require => false
   gem 'rails-erd'
   gem "spring"
   gem 'spring-commands-rspec'
