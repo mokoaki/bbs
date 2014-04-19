@@ -6,16 +6,16 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'mysql2'
 gem 'bootstrap-sass', '2.3.2.0'
 
-group :development, :test do
+group :development do
   gem 'whenever', :require => false
   gem 'rails-erd'
   gem "spring"
   gem 'spring-commands-rspec'
-  gem 'rspec-rails', '2.13.1'
-  gem 'factory_girl_rails', '4.2.1'
 end
 
 group :test do
+  gem 'rspec-rails', '2.13.1'
+  gem 'factory_girl_rails', '4.2.1'
   #gem 'selenium-webdriver', '2.35.1'
   gem 'capybara', '2.1.0'
 end

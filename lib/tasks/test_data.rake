@@ -1,10 +1,10 @@
 namespace :db do
   desc 'insert test data'
   task test_data: :environment do
-    user_num       = 5
-    plate_num      = 10
-    bbs_thread_num = 10
-    context_num    = 20
+    user_num       = 5000
+    plate_num      = 20
+    bbs_thread_num = 20
+    context_num    = 400
 
     users       = []
     plates      = []
