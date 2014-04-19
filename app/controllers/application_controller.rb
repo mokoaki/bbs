@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     return @plates if @plates
 
     if super_admin?
-      @plates = Plate.where(nil)
+      @plates = Plate.all
     else
       @plates = current_user.plates
     end
