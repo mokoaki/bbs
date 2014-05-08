@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   before_create :create_remember_token
 
   default_scope -> { select(:name) }
-  scope :normal_select, -> { select(:id, :email, :name, :password_digest, :remember_token, :super_admin, :admin) }
+  scope :normal_select, -> { select(:id, :email, :name, :password_digest, :remember_token, :auth) }
 
   has_many :user_plates, dependent: :destroy
   has_many :plates, :through => :user_plates, source: :plate
@@ -31,6 +31,5 @@ class User < ActiveRecord::Base
 
   def before_save_action
     self.email.downcase!
-    self.admin = true if self.super_admin?
   end
 end

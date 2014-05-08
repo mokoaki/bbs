@@ -56,8 +56,7 @@ ActiveRecord::Schema.define(version: 20140402094505) do
     t.string   "name"
     t.string   "password_digest"
     t.string   "remember_token"
-    t.boolean  "super_admin",     default: false
-    t.boolean  "admin",           default: false
+    t.integer  "auth",            default: 1
     t.boolean  "enable",          default: true
     t.datetime "created_at"
     t.datetime "updated_at"

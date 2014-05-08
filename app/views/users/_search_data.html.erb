@@ -6,8 +6,7 @@
 
   <div>
     <% get_plates.each do |plate| %>
-      <% #このfindが毎回重そう。%>
-      <% user_plate = UserPlate.find_by(plate_id: plate.id, user_id: user.id) %>
+      <% user_plate = get_user_plate_by_user_id_and_plate_id(user.id, plate.id) %>
       <%= button_tag(plate.name, id: 'plate_access_button', class: "plate_access_#{(user_plate ? 'ok' : 'ng')}", "data-plate_id" => plate.id, "data-user_id" => user.id) %>
     <% end %>
   </div>

@@ -11,13 +11,13 @@ namespace :db do
 
     p "テストユーザ作成 #{user_num}人"
 
-    users << User.create(name: 'テストユーザ',     email: 'user@gmail.com',   password: '11111111', password_confirmation: '11111111', admin: false, super_admin: false)
-    users << User.create(name: 'adminユーザ',      email: 'admin@gmail.com',  password: '11111111', password_confirmation: '11111111', admin: true,  super_admin: false)
-    users << User.create(name: 'superadminユーザ', email: 'sadmin@gmail.com', password: '11111111', password_confirmation: '11111111', admin: true,  super_admin: true)
+    users << User.create(name: 'テストユーザ',     email: 'user@gmail.com',   password: '11111111', password_confirmation: '11111111', auth: 1)
+    users << User.create(name: 'adminユーザ',      email: 'admin@gmail.com',  password: '11111111', password_confirmation: '11111111', auth: 2)
+    users << User.create(name: 'superadminユーザ', email: 'sadmin@gmail.com', password: '11111111', password_confirmation: '11111111', auth: 3)
 
     ActiveRecord::Base.transaction do
       ((User.all.size + 1)..user_num).each do |count|
-        users << User.create(name: "ユーザ#{count}", email: "user#{count}@gmail.com", password: "11111111#{count}", password_confirmation: "11111111#{count}", admin: false, super_admin: false)
+        users << User.create(name: "ユーザ#{count}", email: "user#{count}@gmail.com", password: "11111111#{count}", password_confirmation: "11111111#{count}", auth: 1)
       end
     end
 

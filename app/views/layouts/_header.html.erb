@@ -7,8 +7,10 @@
     <%= link_to '設定', edit_user_path(current_user.id) %>
     <%= link_to 'ログアウト', signout_path, method: 'delete' %>
 
-    admin[<%= admin? %>]
-    super_admin[<%= super_admin? %>]
-    Rails.env[<%= Rails.env %>]
+    admin[ <%= admin? %> ]
+    super_admin[ <%= super_admin? %> ]
+    Rails.env[ <%= Rails.env %> ]
+    Rails.version[ <%= Rails.version %> ]
+    ENV['RBENV_VERSION'][ <%= ENV['RBENV_VERSION'] %> ]
   </div>
 <% end %>

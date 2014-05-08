@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method [:current_user, :signed_in?, :admin?, :super_admin?]
-  helper_method [:get_plates, :get_bbs_threads_by_plate_id]
+  helper_method [:get_plates, :get_bbs_threads_by_plate_id, :get_user_plate_by_user_id_and_plate_id]
 
   private
 
@@ -57,18 +57,40 @@ class ApplicationController < ActionController::Base
     @get_user_plates[plate_id] ||= UserPlate.find_by(user_id: current_user.id, plate_id: plate_id)
   end
 
+  def get_user_plate_by_user_id_and_plate_id(user_id, plate_id)
+    @get_user_plate_by_user_id_and_plate_id ||= []
+
+    if @get_user_plate_by_user_id_and_plate_id[user_id]
+      if @get_user_plate_by_user_id_and_plate_id[user_id][plate_id]
+        return @get_user_plate_by_user_id_and_plate_id[user_id][plate_id]
+      else
+        return nil
+      end
+    end
+
+    @get_user_plate_by_user_id_and_plate_id[user_id] = []
+
+    plate_ids = UserPlate.where(user_id: user_id).pluck(:plate_id)
+
+    plate_ids.each do |plate_id|
+      @get_user_plate_by_user_id_and_plate_id[user_id][plate_id] = true
+    end
+
+    @get_user_plate_by_user_id_and_plate_id[user_id][plate_id]
+  end
+
   #
 
   def current_user
     @current_user ||= User.normal_select.find_by(remember_token: User.encrypt(cookies[:remember_token]), enable: true)
   end
 
-  def super_admin?
-    current_user.super_admin?
+  def admin?
+    [2, 3].include?(current_user.auth)
   end
 
-  def admin?
-    current_user.admin?
+  def super_admin?
+    current_user.auth == 3
   end
 
   def sign_in(user)

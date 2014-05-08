@@ -32,7 +32,8 @@ class ContextsController < ApplicationController
 
     @contexts = Context.where(bbs_thread_id: @bbs_thread.id).where("no >= ?", context_params['no']).order(:id)
 
-    @bbs_thread.update_attributes(contexts_count: context.no)
+    @bbs_thread.contexts_count = context.no
+    @bbs_thread.save
   end
 
   def recontexts
@@ -53,7 +54,7 @@ class ContextsController < ApplicationController
     context = get_context_by_context_id(params[:id])
 
     if context.nil?
-      raise '( ･`ω･´)'
+      raise 'どっかーん'
     end
 
     @deleted_context_id = context.id

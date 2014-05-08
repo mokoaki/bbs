@@ -40,10 +40,10 @@ class BbsThreadsController < ApplicationController
     #created_at更新しない
     BbsThread.record_timestamps = false
 
-    params[:bbs_threads].each do |bbs_thread|
+    params[:bbs_threads].each do |id, bbs_thread|
       #権限チェック
-      if auth_check_by_bbs_thread_id(bbs_thread[:id])
-        BbsThread.update(bbs_thread[:id], name: bbs_thread[:name])
+      if auth_check_by_bbs_thread_id(id)
+        BbsThread.update(id, bbs_thread)
       end
     end
 
